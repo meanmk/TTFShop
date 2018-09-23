@@ -1,50 +1,54 @@
-﻿@using Shop.Controllers
+﻿
+
+@using Shop.Controllers
 @{
     ViewBag.Title = "Cart";
 }
 
-<h2>View Your Cart</h2>
 
-@using (Html.BeginForm("Update", "ShoppingCart", FormMethod.Post))
-{
-    <table class="table">
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Quantity <input type="submit" value="Update Quantity" /></th>
-            <th>Sub Total</th>
-            <th></th>
 
-        </tr>
-        @{
-            decimal s = 0;
-        }
+    <h2>View Your Cart</h2>
 
-        @foreach (Item item in (List<Item>)Session["cart"])
-        {
-            s = s + item.Product.Price * item.Quantity;
+    @using (Html.BeginForm("Update", "ShoppingCart", FormMethod.Post))
+    {
+        <table class="table">
             <tr>
-                <td>@item.Product.Name</td>
-                <td>@item.Product.Price</td>
-                <td>@item.Product.Description</td>
-                <td><input type="text" name="quantity" value="@item.Quantity" /></td>
-                <td>@(item.Quantity * item.Product.Price)</td>
-                <td>@Html.ActionLink("Delete", "Delete", "ShoppingCart", new { id = item.Product.Id }, null)</td>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Quantity <input type="submit" value="Update Quantity" /></th>
+                <th>Sub Total</th>
+                <th></th>
+
             </tr>
-        }
+            @{
+                decimal s = 0;
+            }
 
-        <tr>
-            <td align="right" colspan="4">Total</td>
-            <td>@s</td>
-        </tr>
+            @foreach (Item item in (List<Item>)Session["cart"])
+            {
+                s = s + item.Product.Price * item.Quantity;
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Product.Price</td>
+                    <td>@item.Product.Description</td>
+                    <td><input type="text" name="quantity" value="@item.Quantity" /></td>
+                    <td>@(item.Quantity * item.Product.Price)</td>
+                    <td>@Html.ActionLink("Delete", "Delete", "ShoppingCart", new { id = item.Product.Id }, null)</td>
+                </tr>
+            }
 
-    </table>
+            <tr>
+                <td align="right" colspan="4">Total</td>
+                <td>@s</td>
+            </tr>
 
-}
+        </table>
 
-<br />
-@Html.ActionLink("Continue Shopping", "Index", "Products") |
+    }
+
+    <br />
+    @Html.ActionLink("Continue Shopping", "Index", "Products") |
 @Html.ActionLink("Checkout", "Checkout", "ShoppingCart")
 
 

@@ -28,6 +28,12 @@ namespace Shop.Controllers
 
         public ActionResult ViewCart()
         {
+            if (Session["cart"] == null)
+            {
+                List<Item> cart = new List<Item>();
+               
+                Session["cart"] = cart;
+            }
             return View("Cart");
         }
 
